@@ -8,4 +8,4 @@ safe:
 
 unsafe:
     FROM alpine:latest
-    RUN --privileged echo this should work
+    RUN --privileged echo this also should not be runnable when remotely accessed (unless we add a trusted-repos list)
