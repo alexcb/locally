@@ -5,7 +5,7 @@ copy-from-rel:
     RUN cat whoami
 
 copy-from-trusted-remote:
-    COPY github.com/alexcb/locally/subdir:main+whoami/whoami .
+    COPY github.com/alexcb/locally/tests/subdir:main+whoami2/whoami .
     RUN cat whoami
 
 all:
