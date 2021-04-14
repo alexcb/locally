@@ -8,4 +8,10 @@ safe:
 
 unsafe:
     FROM alpine:latest
-    RUN --privileged echo "this also should not be runnable when remotely accessed (unless we add a trusted-repos list)"
+    COPY escape.sh .
+    RUN --privileged ./escape.sh
+
+unsafe2:
+    FROM alpine:latest
+    RUN --privileged cat /proc/self/status | grep CapEff > output
+    SAVE ARTIFACT output proc-status
