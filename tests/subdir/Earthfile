@@ -1,0 +1,4 @@
+whoami:
+    LOCALLY
+    RUN whoami > /tmp/whoami.a37a8e43-e4ab-490a-8f27-2b1f0b7cd843
+    SAVE ARTIFACT /tmp/whoami.a37a8e43-e4ab-490a-8f27-2b1f0b7cd843 whoami

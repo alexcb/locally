@@ -15,3 +15,9 @@ unsafe2:
     FROM alpine:latest
     RUN --privileged cat /proc/self/status | grep CapEff > output
     SAVE ARTIFACT output proc-status
+
+a:
+    FROM alpine:latest
+    COPY +unsafe2/proc-status .
+    RUN cat proc-status | grep 0000003fffffffff
+

@@ -1,0 +1,13 @@
+FROM alpine:latest
+
+copy-from-rel:
+    COPY ./subdir+whoami/whoami .
+    RUN cat whoami
+
+copy-from-trusted-remote:
+    COPY github.com/alexcb/locally/subdir:main+whoami/whoami .
+    RUN cat whoami
+
+all:
+    BUILD +copy-from-rel
+    BUILD +copy-from-trusted-remote
