@@ -5,9 +5,9 @@ copy-from-rel:
     RUN cat whoami
 
 copy-from-trusted-remote:
-    COPY github.com/alexcb/locally/tests/subdir:main+whoami2/whoami .
+    COPY --allow-privileged github.com/alexcb/locally/tests/subdir:main+whoami2/whoami .
     RUN cat whoami
 
 all:
-    BUILD +copy-from-rel
+    #BUILD +copy-from-rel
     BUILD +copy-from-trusted-remote
