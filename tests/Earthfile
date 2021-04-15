@@ -1,5 +1,17 @@
 FROM alpine:latest
 
+runpriv:
+    RUN --privileged cat /proc/self/status | grep CapEff | grep 0000003fffffffff
+
+runlocally:
+    LOCALLY
+    RUN whoami > /tmp/whoami.7902384e-992c-4290-a348-dd5acd1a049c
+    SAVE ARTIFACT /tmp/whoami.7902384e-992c-4290-a348-dd5acd1a049c whoami
+
+copy-from-locally:
+    COPY +runlocally/whoami .
+    RUN cat whoami
+
 copy-from-rel:
     COPY ./subdir+whoami/whoami .
     RUN cat whoami
@@ -8,6 +20,20 @@ copy-from-trusted-remote:
     COPY --allow-privileged github.com/alexcb/locally/tests/subdir:main+whoami2/whoami .
     RUN cat whoami
 
+should-fail-1:
+    COPY github.com/alexcb/locally/tests/subdir:main+whoami2/whoami .
+
+should-fail-2:
+    FROM github.com/alexcb/locally/tests:main+all
+
+should-fail-3:
+    BUILD github.com/alexcb/locally/tests:main+all
+
+should-fail-4:
+    BUILD github.com/alexcb/locally/tests:main+runpriv
+
 all:
-    #BUILD +copy-from-rel
+    BUILD +copy-from-locally
+    BUILD +copy-from-rel
     BUILD +copy-from-trusted-remote
+    BUILD --allow-privileged github.com/alexcb/locally/tests:main+runpriv
